@@ -43,6 +43,7 @@ class Program
         Console.WriteLine($"Total devices: {totalDevices}");
         Console.WriteLine($"Active devices: {activeDevices}");
         Console.WriteLine($"Total watt usage: {totalWattUsage}");
+        MostWattUsingDevice();
         Console.WriteLine("\n");
 
         // Output Events
@@ -67,20 +68,26 @@ class Program
 
             if (MyManager.Events.Count == 0)
             {
-                SmartEvent noEventsEvent = new SmartEvent{ Message = "No relevant events lately"};
-                noEventsEvent.Timestamp = DateTime.Now; 
-                MyManager.Events.Add(noEventsEvent);
+                MyManager.AddNewSmartEvent("No relevant events lately");
             }
             
-            await Task.Delay(60000); 
+            await Task.Delay(60000);
         }
     }
     
-    public async Task SetDeviceOnOff()
+    public static async Task SetDeviceOnOff()
     {
-        // Output new random variable true false
+        // Output new random bool (true == 0, false == 1)
         bool changeIsOn = Random.Shared.Next(2) == 0;
-        
+    }
 
+    private static void MostWattUsingDevice()
+    {
+        var topDevice = MyManager.DeviceList.OrderByDescending(d => d.Watts).FirstOrDefault();
+        
+        if (topDevice != null)
+        {
+            Console.WriteLine($"Most watt-using device: {topDevice.Name}");
+        }
     }
 }
