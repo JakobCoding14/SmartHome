@@ -24,7 +24,7 @@ class Program
 
         MyManager.AddDevice(oledTv);
         MyManager.AddDevice(smartToaster);
-        MyManager.AddDevice(raspberryPi);
+        MyManager.AddDevice(raspberryPi);   
     }
 
     static void PrintSystemStats()
