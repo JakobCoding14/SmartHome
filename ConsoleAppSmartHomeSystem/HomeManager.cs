@@ -16,7 +16,6 @@ public class HomeManager
     public int CountWatts()
     {
         var totalWatts = DeviceList.Where(d => d.IsOn).Sum(d => d.Watts);
-        int test = 0;
         return totalWatts;
         
     }
