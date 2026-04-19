@@ -8,6 +8,7 @@ class Program
     {
         NewInstances(); 
         _ = ClearListTimer();
+        _ = SetDeviceOnOff();
         
         while (true)
         {
@@ -77,15 +78,21 @@ class Program
     
     public static async Task SetDeviceOnOff()
     {
-        // Output new random bool (true == 0, false == 1)
-        bool changeIsOn = Random.Shared.Next(2) == 0;
-        int randomDevice = Random.Shared.Next(0, MyManager.DeviceList.Count - 1);
-
-        if (changeIsOn != MyManager.DeviceList[randomDevice].IsOn)
+        while (true)
         {
-            MyManager.DeviceList[randomDevice].IsOn = changeIsOn;
-            MyManager.AddNewSmartEvent($"{randomDevice} has been set ");
-        }
+            // Output new random bool (true == 0, false == 1)
+            bool changeIsOn = Random.Shared.Next(2) == 0;
+            int randomDevice = Random.Shared.Next(0, MyManager.DeviceList.Count);
+
+            if (changeIsOn != MyManager.DeviceList[randomDevice].IsOn)
+            {
+                MyManager.DeviceList[randomDevice].IsOn = changeIsOn;
+                MyManager.AddNewSmartEvent($"{MyManager.DeviceList[randomDevice].Name} status has been changed. It {(MyManager.DeviceList[randomDevice].IsOn ? "is on" : "is off")}");
+            }
+     
+            await Task.Delay(10000); 
+        } 
+        
     }
 
     private static void MostWattUsingDevice()
