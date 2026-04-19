@@ -79,6 +79,13 @@ class Program
     {
         // Output new random bool (true == 0, false == 1)
         bool changeIsOn = Random.Shared.Next(2) == 0;
+        int randomDevice = Random.Shared.Next(0, MyManager.DeviceList.Count - 1);
+
+        if (changeIsOn != MyManager.DeviceList[randomDevice].IsOn)
+        {
+            MyManager.DeviceList[randomDevice].IsOn = changeIsOn;
+            MyManager.AddNewSmartEvent($"{randomDevice} has been set ");
+        }
     }
 
     private static void MostWattUsingDevice()
