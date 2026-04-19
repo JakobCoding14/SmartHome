@@ -23,6 +23,6 @@ public class HomeManager
     {
         SmartEvent newEvent = new SmartEvent { Message = message };
         newEvent.Timestamp = DateTime.Now;
-        Events.Add(newEvent);
+        Events.Add(newEvent); 
     }      
 }

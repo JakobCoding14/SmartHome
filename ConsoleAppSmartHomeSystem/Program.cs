@@ -96,5 +96,5 @@ class Program
         {
             Console.WriteLine($"Most watt-using device: {topDevice.Name}");
         }
-    }
+    }   
 }
