@@ -25,15 +25,15 @@ class Program
 
         MyManager.AddDevice(oledTv);
         MyManager.AddDevice(smartToaster);
-        MyManager.AddDevice(raspberryPi);   
+        MyManager.AddDevice(raspberryPi);
     }
 
     static void PrintSystemStats()
     {
         // Clearing the Console (old values)
-        Console.Clear();
-
-        // Storing and initializing the store-variables
+        Console.Clear();                                                   
+                                    
+        // Storing and initializing the store-variables                    
         int totalDevices = MyManager.DeviceList.Count;
         int activeDevices = MyManager.DeviceList.Count(d => d.IsOn);
         int totalWattUsage = MyManager.CountWatts();
@@ -80,9 +80,10 @@ class Program
     {
         while (true)
         {
-            // Output new random bool (true == 0, false == 1)
+            // Output new random bool (true == 0, false == 1)  
             bool changeIsOn = Random.Shared.Next(2) == 0;
             int randomDevice = Random.Shared.Next(0, MyManager.DeviceList.Count);
+            int randomCooldown = Random.Shared.Next(5000, 20000);
 
             if (changeIsOn != MyManager.DeviceList[randomDevice].IsOn)
             {
@@ -90,7 +91,7 @@ class Program
                 MyManager.AddNewSmartEvent($"{MyManager.DeviceList[randomDevice].Name} status has been changed. It {(MyManager.DeviceList[randomDevice].IsOn ? "is on" : "is off")}");
             }
      
-            await Task.Delay(10000); 
+            await Task.Delay(randomCooldown);
         } 
         
     }
