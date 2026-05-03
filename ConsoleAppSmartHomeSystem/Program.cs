@@ -1,21 +1,21 @@
 ﻿namespace ConsoleAppSmartHomeSystem;
 
-class Program
+static class Program
 {
     private static readonly HomeManager MyManager = new();
 
     static async Task Main()
     {
-        NewInstances(); 
+        NewInstances();
         _ = ClearListTimer();
         _ = SetDeviceOnOff();
-        
+
         while (true)
         {
             PrintSystemStats();
             await Task.Delay(2000);
         }
-    }    
+    }
 
     static void NewInstances()
     {
@@ -31,16 +31,15 @@ class Program
     static void PrintSystemStats()
     {
         // Clearing the Console (old values)
-        Console.Clear();                                                   
-                                    
+        Console.Clear();
         // Storing and initializing the store-variables                    
         int totalDevices = MyManager.DeviceList.Count;
         int activeDevices = MyManager.DeviceList.Count(d => d.IsOn);
         int totalWattUsage = MyManager.CountWatts();
-        
+
         // Output
         Console.WriteLine("\n");
-        Console.WriteLine("---------------System Stats---------------"); 
+        Console.WriteLine("---------------System Stats---------------");
         Console.WriteLine($"Total devices: {totalDevices}");
         Console.WriteLine($"Active devices: {activeDevices}");
         Console.WriteLine($"Total watt usage: {totalWattUsage}");
@@ -54,7 +53,7 @@ class Program
     static void PrintEvents()
     {
         Console.WriteLine("---------------System Events---------------");
-        
+
         foreach (SmartEvent ev in MyManager.Events)
         {
             Console.WriteLine("Event: " + ev.Message);
@@ -63,7 +62,7 @@ class Program
 
     static async Task ClearListTimer()
     {
-        while (true) 
+        while (true)
         {
             MyManager.Events.RemoveAll(e => (DateTime.Now - e.Timestamp).TotalSeconds > 60);
 
@@ -71,11 +70,11 @@ class Program
             {
                 MyManager.AddNewSmartEvent("No relevant events lately");
             }
-            
+
             await Task.Delay(60000);
         }
     }
-    
+
     public static async Task SetDeviceOnOff()
     {
         while (true)
@@ -90,19 +89,18 @@ class Program
                 MyManager.DeviceList[randomDevice].IsOn = changeIsOn;
                 MyManager.AddNewSmartEvent($"{MyManager.DeviceList[randomDevice].Name} status has been changed. It {(MyManager.DeviceList[randomDevice].IsOn ? "is on" : "is off")}");
             }
-     
+
             await Task.Delay(randomCooldown);
-        } 
-        
+        }
     }
 
     private static void MostWattUsingDevice()
     {
         var topDevice = MyManager.DeviceList.OrderByDescending(d => d.Watts).FirstOrDefault();
-        
+
         if (topDevice != null)
         {
             Console.WriteLine($"Most watt-using device: {topDevice.Name}");
         }
-    }   
+    }
 }

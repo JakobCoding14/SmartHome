@@ -1,4 +1,6 @@
-﻿namespace ConsoleAppSmartHomeSystem;
+﻿using System.ComponentModel;
+
+namespace ConsoleAppSmartHomeSystem;
 
 public class HomeManager
 {
@@ -24,5 +26,5 @@ public class HomeManager
         SmartEvent newEvent = new SmartEvent { Message = message };
         newEvent.Timestamp = DateTime.Now;
         Events.Add(newEvent); 
-    }      
+    }
 }
