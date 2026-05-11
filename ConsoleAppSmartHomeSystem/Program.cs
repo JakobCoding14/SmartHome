@@ -14,7 +14,6 @@ static class Program
         {
             PrintSystemStats();
             await Task.Delay(2000);
-            await Task.Delay(1);
         }
     }
 
@@ -73,7 +72,6 @@ static class Program
             }
 
             await Task.Delay(60000);
-            await Task.Delay(1);
         }
     }
 
