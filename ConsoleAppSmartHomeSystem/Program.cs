@@ -14,6 +14,7 @@ static class Program
         {
             PrintSystemStats();
             await Task.Delay(2000);
+            await Task.Delay(1);
         }
     }
 
@@ -72,13 +73,14 @@ static class Program
             }
 
             await Task.Delay(60000);
+            await Task.Delay(1);
         }
     }
 
     public static async Task SetDeviceOnOff()
     {
         while (true)
-        {
+        {       
             // Output new random bool (true == 0, false == 1)  
             bool changeIsOn = Random.Shared.Next(2) == 0;
             int randomDevice = Random.Shared.Next(0, MyManager.DeviceList.Count);
